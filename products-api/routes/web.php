@@ -16,3 +16,17 @@
 $router->get('/', function () use ($router) {
     return $router->app->version();
 });
+
+
+$router->get('/key', function () use ($router) {
+    $length = 32; // Longitud de la clave (en bytes)
+    $randomBytes = random_bytes($length);
+    $appKey = base64_encode($randomBytes);
+    return response()
+                ->json(
+                    [
+                        "key" => $appKey
+                    ]
+                );
+});
+
