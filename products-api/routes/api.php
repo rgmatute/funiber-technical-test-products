@@ -13,8 +13,19 @@
 |
 */
 
+//Fix to Method OPTIONS
+$router->options('/{any:.*}', function () {
+    return response(['status' => 'success'])
+        ->header('Access-Control-Allow-Methods','OPTIONS, GET, POST, PUT, DELETE')
+        ->header('Access-Control-Allow-Headers', 'Authorization, Content-Type, Origin');
+});
+
 $router->get('/', function () use ($router) {
-    return $router->app->version();
+    // return $router->app->version();
+    return response()->json([
+        'success' => true,
+        'framework' => $router->app->version()
+    ]);
 });
 
 
@@ -23,10 +34,9 @@ $router->get('/key', function () use ($router) {
     $randomBytes = random_bytes($length);
     $appKey = base64_encode($randomBytes);
     return response()
-                ->json(
-                    [
-                        "key" => $appKey
-                    ]
-                );
+                ->json([
+                    'success' => true,
+                    "key" => $appKey
+                ]);
 });
 
