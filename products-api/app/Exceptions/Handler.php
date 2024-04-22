@@ -8,6 +8,8 @@ use Illuminate\Validation\ValidationException;
 use Laravel\Lumen\Exceptions\Handler as ExceptionHandler;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Throwable;
+use Symfony\Component\HttpFoundation\Response;
+
 
 class Handler extends ExceptionHandler
 {
@@ -49,6 +51,22 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        return parent::render($request, $exception);
+        // return parent::render($request, $exception);
+        // return parent::render($request, $exception);
+        // dump($exception);
+
+        if ($exception instanceof GenericException) {
+            return response()->json([
+                'success' => false,
+                'message' => empty( $exception->getMessage()) ? $exception->getTrace(): $exception->getMessage(),
+                'errorCode' => spl_object_hash($exception)
+            ], $exception->getStatus());
+        }
+
+        return response()->json([
+            'success' => false,
+            'message' => empty( $exception->getMessage()) ? $exception->getTrace(): $exception->getMessage(),
+            'errorCode' => spl_object_hash($exception)
+        ], Response::HTTP_INTERNAL_SERVER_ERROR);
     }
 }
