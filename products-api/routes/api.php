@@ -1,5 +1,7 @@
 <?php
 
+require __DIR__.'/../routes/account.php';
+
 /** @var \Laravel\Lumen\Routing\Router $router */
 
 /*
