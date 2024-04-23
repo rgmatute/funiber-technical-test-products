@@ -8,15 +8,18 @@
     use Exception;
     use App\Http\Helpers\Utils;
     use Illuminate\Pagination\LengthAwarePaginator;
+    use App\Service\HistoryService;
 
     class ProductService
     {
 
         use Utils;
         private $productRepository;
+        private $historyService;
 
         public function __construct(){
             $this->productRepository = new ProductRepository();
+            $this->historyService = new HistoryService();
         }
 
         /**
@@ -71,6 +74,16 @@
 
             if(!isset($catalog)) {
                 throw new GenericException("No se pudo guardar el catalog!", 404);
+            } else {
+
+                unset($catalog['catalog']);
+
+                $this->historyService->created([
+                    'event' => 'created',
+                    'product_id' => $id,
+                    'before' => json_encode([]),
+                    'after' => $catalog->toJson()
+                ], $jwtInfo);
             }
 
             return $catalog;
@@ -89,26 +102,43 @@
 
             $update = $exits->toArray();
 
-            $update['catalog_key']           = $inData['catalog_key']           ?? $update['catalog_key'];
-            $update['item_name']             = $inData['item_name']             ?? $update['item_name'];
-            $update['catalog_name']          = $inData['catalog_name']          ?? $update['catalog_name'];
-            $update['catalog_description']   = $inData['catalog_description']   ?? $update['catalog_description'];
-            $update['status']                = $inData['status']                ?? $update['status'];
+            $update['serial_code']  = $inData['serial_code']    ?? $update['serial_code'];
+            $update['name']         = $inData['name']           ?? $update['name'];
+            $update['description']  = $inData['description']    ?? $update['description'];
+            $update['price']        = $inData['price']          ?? $update['price'];
+            $update['iva']          = $inData['iva']            ?? $update['iva'];
+            $update['discount']     = $inData['discount']       ?? $update['discount'];
+            $update['resource_id']  = $inData['resource_id']    ?? $update['resource_id'];
+            $update['stock']        = $inData['stock']          ?? $update['stock'];
+            $update['status']       = $inData['status']         ?? $update['status'];
+            $update['catalog_id']   = $inData['catalog_id']     ?? $update['catalog_id'];
 
             $update['last_modified_by']      = $jwtInfo->username ?? 'system';
             $update['updated_at']           = Carbon::now();
             
-            unset($update['id'], $update['created_at']);
+            unset($update['id'], $update['created_at'], $update['catalog']);
+
+            // dd($update);
 
             $this->productRepository->update($update, $id);
 
-            $catalog = $this->productRepository->findById($id);
+            $product = $this->productRepository->findById($id);
 
-            if(!isset($catalog)) {
+            if(!isset($product)) {
                 throw new GenericException("No se pudo guardar el catalog!", 404);
+            } else {
+                
+                unset($product['catalog'], $exits['catalog']);
+
+                $this->historyService->created([
+                    'event' => 'updated',
+                    'product_id' => $id,
+                    'before' => $exits->toJson(),
+                    'after' => $product->toJson()
+                ], $jwtInfo);
             }
 
-            return $catalog;
+            return $product;
         }
 
         /**
