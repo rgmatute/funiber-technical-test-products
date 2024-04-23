@@ -3,6 +3,7 @@
 require __DIR__.'/../routes/account.php';
 require __DIR__.'/../routes/catalog.php';
 require __DIR__.'/../routes/product.php';
+require __DIR__.'/../routes/history.php';
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
