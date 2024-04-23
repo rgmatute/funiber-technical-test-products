@@ -2,8 +2,10 @@
 
 namespace App\Http\Helpers;
 
+use App\Exceptions\GenericException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Response;
+use Illuminate\Support\Facades\Validator;
 
 trait Utils
 {
@@ -48,5 +50,31 @@ trait Utils
             'success' => true,
             'id_token' => $bearerToken
         ], $statusCode);
+    }
+
+    public function validateRequest(array $rules)
+    {
+        $validator = Validator::make(request()->all(), $rules);
+
+        if ($validator->fails()) {
+            throw new GenericException(json_encode($validator->errors()), 422);
+            // return response()->json([
+            //     'success' => false,
+            //     'errors' => $validator->errors()
+            // ], 422);
+        }
+
+        return request();
+    }
+
+    public static function extractTokenFromAuthorizationHeader($authorizationHeader) {
+        // Verifica si el encabezado de autorización comienza con "Bearer"
+        if (strpos($authorizationHeader, 'Bearer ') === 0) {
+            // Si comienza con "Bearer", extrae solo el token
+            return substr($authorizationHeader, 7);
+        }
+    
+        // Si no comienza con "Bearer", asume que el token está completo y lo devuelve tal cual
+        return $authorizationHeader;
     }
 }

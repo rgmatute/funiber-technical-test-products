@@ -2,6 +2,7 @@
 
     namespace App\AuthToken;
     use App\Exceptions\GenericException;
+    use App\Http\Helpers\Utils;
     use Lcobucci\JWT\Builder;
     use Lcobucci\JWT\ValidationData;
     use Lcobucci\JWT\Signer\Hmac\Sha256;
@@ -46,10 +47,14 @@
             return $newToken;
         }
 
-        static function userInfo($request){
+        public static function userInfo($request){
             $parser 	= new Parser();
             $strToken 	= $request->header('Authorization');
+            
             if(!empty($strToken)){
+                
+                $strToken = Utils::extractTokenFromAuthorizationHeader($strToken);
+
                 $token 		= $parser->parse($strToken); # Parsea desde una string
                 $token->getHeaders(); 	# Obtiene todo el header del token
                 $token->getClaims(); 	# Obtiene todos los claims del token

@@ -1,6 +1,7 @@
 <?php
 
 require __DIR__.'/../routes/account.php';
+require __DIR__.'/../routes/catalog.php';
 
 /** @var \Laravel\Lumen\Routing\Router $router */
 
