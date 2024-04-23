@@ -37,7 +37,7 @@ trait Utils
     }
 
     public function password($value) {
-        return password_hash($value, PASSWORD_BCRYPT, ['cost' => 10]);
+        return password_hash($value, PASSWORD_BCRYPT, ['cost' => 12]);
     }
 
     public function verifyPassword($password, $password_hash) {

@@ -22,4 +22,9 @@ class Catalog extends Model
     ];
 
     protected $hidden = [];
+
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
 }
