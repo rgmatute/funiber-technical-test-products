@@ -17,7 +17,7 @@ class CatalogRepository
 
     public function findAll(): LengthAwarePaginator
     {
-        $perPage = request()->input('per_page', 10) ?? 10;
+        $perPage = request()->input('size', 10) ?? 10;
 
 
         return Catalog::where('status', true)->paginate($perPage);
@@ -41,7 +41,7 @@ class CatalogRepository
 
     public function search($key, $value) {
 
-        $perPage = request()->input('per_page', 10) ?? 10;
+        $perPage = request()->input('size', 10) ?? 10;
 
         return Catalog::where($key, 'like', '%'.$value.'%')->paginate($perPage);
     }
