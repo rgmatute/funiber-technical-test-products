@@ -191,7 +191,7 @@ export default class CatalogComponent extends Vue {
                 catalog_description: this.catalog.catalog_description
             })
             .then(() => {
-                Swal.fire("Bien echo!", "Actualizamos el catálogo correctamente!", "success");
+                Swal.fire("Bien Hecho!", "Actualizamos el catálogo correctamente!", "success");
                 this.retrieveAllCatalogs();
                 this.closeDialog();
             })
@@ -207,7 +207,7 @@ export default class CatalogComponent extends Vue {
                 catalog_description: this.catalog.catalog_description
             })
             .then(() => {
-                Swal.fire("Bien echo!", "Registramos el catálogo correctamente!", "success");
+                Swal.fire("Bien Hecho!", "Registramos el catálogo correctamente!", "success");
                 this.retrieveAllCatalogs();
                 this.closeDialog();
             })
