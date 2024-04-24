@@ -56,7 +56,7 @@ class AccountController extends Controller
         return response()->json(null);
     }
 
-    public function accountInfo(Request $request): JsonResponse
+    public function accountInfo(): JsonResponse
     {
         $account = $this->accountService->accountInfo($this->jwtInfo);
 
