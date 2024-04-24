@@ -39,7 +39,7 @@ const router = new Router({
     },
     ...account,
     ...admin,
-    entities,
+    ...entities,
     ...pages
   ]
 });

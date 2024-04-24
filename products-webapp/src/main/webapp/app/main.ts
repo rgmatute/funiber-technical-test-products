@@ -27,6 +27,7 @@ import AlertService from './shared/alert/alert.service';
 import '../content/scss/global.scss';
 import '../content/scss/vendor.scss';
 import TranslationService from '@/locale/translation.service';
+import CatalogService from './entities/catalog/catalog.service';
 /* tslint:disable */
 
 // jhipster-needle-add-entity-service-to-main-import - JHipster will import entities services here
@@ -87,6 +88,8 @@ const vue = new Vue({
     // jhipster-needle-add-entity-service-to-main - JHipster will import entities services here
     accountService: () => accountService,
     alertService: () => new AlertService(),
+
+    catalogService: () => new CatalogService()
   },
   i18n,
   store,
