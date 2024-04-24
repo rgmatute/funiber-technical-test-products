@@ -17,7 +17,10 @@ class CatalogRepository
 
     public function findAll(): LengthAwarePaginator
     {
-        return Catalog::where('status', true)->paginate(20);
+        $perPage = request()->input('per_page', 10) ?? 10;
+
+
+        return Catalog::where('status', true)->paginate($perPage);
     }
 
     public function findById( int $id){
@@ -37,7 +40,10 @@ class CatalogRepository
     }
 
     public function search($key, $value) {
-        return Catalog::where($key, 'like', '%'.$value.'%')->paginate();
+
+        $perPage = request()->input('per_page', 10) ?? 10;
+
+        return Catalog::where($key, 'like', '%'.$value.'%')->paginate($perPage);
     }
 
     public function isActiveById($id) {
