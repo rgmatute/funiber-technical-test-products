@@ -6,6 +6,7 @@
     use App\Exceptions\GenericException;
     use App\Http\Helpers\Utils;
     use App\Repository\UserRepository;
+    use Illuminate\Support\Str;
 
     class AccountService
     {
@@ -78,7 +79,21 @@
                 throw new GenericException("No existen datos con la sesion actual!", 404);
             }
 
-            return $response;
+
+            $userArray = $response->toArray();
+            $camelCaseArray = [];
+            foreach ($userArray as $key => $value) {
+                $camelCaseArray[Str::camel($key)] = $value;
+            }
+
+            $camelCaseArray['langKey']        = 'es';
+            $camelCaseArray['login']        = $camelCaseArray['email'] ?? null;
+            $camelCaseArray['authorities']  = [
+                "ROLE_USER",
+                "ROLE_ADMIN"
+            ];
+
+            return $camelCaseArray;
         }
 
     }
