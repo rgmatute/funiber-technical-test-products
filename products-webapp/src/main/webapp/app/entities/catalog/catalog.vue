@@ -1,17 +1,17 @@
 <template>
     <div :style="catalogs && catalogs.length === 0 ? 'height: 430px !important' : ''">
-        <h2 id="page-heading" data-cy="ProductsHeading">
-            <span id="products-heading">Catalogs</span>
+        <h2 id="page-heading" data-cy="CatalogHeading">
+            <span id="catalogs-heading">Catalogs</span>
             <br>
             <div class="d-flex justify-content-end">
                 <button class="btn btn-info mr-2" v-on:click="handleSyncList" :disabled="isFetching">
                     <font-awesome-icon icon="sync" :spin="isFetching"></font-awesome-icon> <span>Refrescar</span>
                 </button>
-                <router-link :to="{ name: 'ProductsCreate' }" custom v-slot="{ navigate }">
-                    <button class="btn btn-primary ml-2" v-on:click="navigate">
-                        <font-awesome-icon icon="plus"></font-awesome-icon> <span>Registrar Catalogo</span>
-                    </button>
-                </router-link>
+                <!-- <router-link :to="{ name: 'CatalogCreate' }" custom v-slot="{ navigate }"> -->
+                <button class="btn btn-primary ml-2" v-on:click="registerCatalog()">
+                    <font-awesome-icon icon="plus"></font-awesome-icon> <span>Registrar Catalogo</span>
+                </button>
+                <!-- </router-link> -->
             </div>
         </h2>
 
@@ -59,11 +59,11 @@
                         <td class="align-middle">{{ catalog.created_by }}</td>
 
                         <td class="align-middle">
-                            <b-badge v-if="catalog.status == '1'" variant="success">ACTIVE</b-badge>
+                            <b-badge v-if="catalog.status == true" variant="success">ACTIVE</b-badge>
                             <b-badge v-else variant="danger">INACTIVE</b-badge>
                         </td>
                         <td class="align-middle">
-                            <b-button variant="primary" size="sm">
+                            <b-button variant="primary" size="sm" @click="editCatalog(catalog)">
                                 <font-awesome-icon icon="pencil" size="sm"></font-awesome-icon> Edit
                             </b-button>
 
@@ -86,7 +86,8 @@
                 <p id="jhi-delete-catalog-heading">¿Está seguro de que desea eliminar el catalogo seleccionado?</p>
                 <div>
                     <b-alert show variant="warning">
-                        <strong>¡Advertencia¡</strong> El Catalogo solo , se quedará inactivo, pero no será posible visualizarlo.
+                        <strong>¡Advertencia¡</strong> El Catalogo solo , se quedará inactivo, pero no será posible
+                        visualizarlo.
                     </b-alert>
                 </div>
             </div>
@@ -100,6 +101,36 @@
                     <font-awesome-icon icon="trash"></font-awesome-icon>
                     Eliminar
                 </button>
+            </div>
+        </b-modal>
+
+        <!-- modal de editar y crear -->
+        <b-modal ref="createdEditEntity" id="createdEditEntity">
+            <span slot="modal-title"><span id="rodechStoreApp.catalog.delete.question"
+                    data-cy="catalogDeleteDialogHeading">{{ createdTitleModal }}</span></span>
+            <div class="modal-body">
+
+                <b-form-group label="Código del catálogo">
+                    <b-form-input :disabled="catalog.id" v-model="catalog.catalog_key"></b-form-input>
+                </b-form-group>
+                <b-form-group label="Nombre de catálogo">
+                    <b-form-input v-model="catalog.catalog_name"></b-form-input>
+                </b-form-group>
+                <b-form-group label="Descripción del catálogo">
+                    <b-form-textarea id="textarea" placeholder="Enter description for catalog" rows="3"
+                        max-rows="6" v-model="catalog.catalog_description"></b-form-textarea>
+                </b-form-group>
+
+            </div>
+            <div slot="modal-footer">
+                <button type="button" class="btn btn-secondary" v-on:click="closeDialog()">
+                    <font-awesome-icon icon="ban"></font-awesome-icon>
+                    Cancelar
+                </button>
+                <b-button variant="primary" v-on:click="saveCatalog()">
+                    <font-awesome-icon icon="save"></font-awesome-icon>
+                    Guardar
+                </b-button>
             </div>
         </b-modal>
 

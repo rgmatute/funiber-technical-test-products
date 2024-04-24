@@ -3,6 +3,8 @@ import AlertService from '@/shared/alert/alert.service';
 import { ICatalog } from '@/shared/model/catalog.model';
 import { Component, Vue, Inject } from 'vue-property-decorator';
 import CatalogService from './catalog.service';
+import Catalog from './catalog.vue';
+import Swal from 'sweetalert2';
 
 @Component
 export default class CatalogComponent extends Vue {
@@ -25,6 +27,18 @@ export default class CatalogComponent extends Vue {
 
 
     public catalogs: ICatalog[] = [];
+
+    // crear y editar catalogo
+    public createdTitleModal = '';
+    public catalog: any = {
+        id: null,
+        catalog_key: null,
+        item_name: null,
+        catalog_name: null,
+        catalog_description: null,
+        status: true
+      };
+    
 
     public mounted(): void {
         this.retrieveAllCatalogs();
@@ -122,6 +136,7 @@ export default class CatalogComponent extends Vue {
 
     public closeDialog(): void {
         (<any>this.$refs.removeEntity).hide();
+        (<any>this.$refs.createdEditEntity).hide();
     }
 
     public removeCatalog(): void {
@@ -144,6 +159,63 @@ export default class CatalogComponent extends Vue {
             this.alertService().showHttpError(this, error.response);
           });
       }
+        
+    public registerCatalog (): void {
+        this.createdTitleModal = 'Crear Catalogo';
+
+        this.catalog = [];
+
+        if (<any>this.$refs.createdEditEntity) {
+            (<any>this.$refs.createdEditEntity).show();
+        }
+    }
+
+    public editCatalog (catalog: ICatalog): void {
+        this.createdTitleModal = 'Editar Catalogo';
+        
+        this.catalog = catalog
+
+        if (<any>this.$refs.createdEditEntity) {
+            (<any>this.$refs.createdEditEntity).show();
+        }
+    }
+
+    public saveCatalog(): void {
+
+        if(this.catalog.id) {
+            this.catalogService()
+            .update({
+                id: this.catalog.id,
+                item_name: this.catalog.catalog_name,
+                catalog_name: this.catalog.catalog_name,
+                catalog_description: this.catalog.catalog_description
+            })
+            .then(() => {
+                Swal.fire("Bien echo!", "Actualizamos el catálogo correctamente!", "success");
+                this.retrieveAllCatalogs();
+                this.closeDialog();
+            })
+            .catch(error => {
+                this.alertService().showHttpError(this, error.response);
+            });
+        }else {
+            this.catalogService()
+            .create({
+                catalog_key: this.catalog.catalog_key,
+                item_name: this.catalog.catalog_name,
+                catalog_name: this.catalog.catalog_name,
+                catalog_description: this.catalog.catalog_description
+            })
+            .then(() => {
+                Swal.fire("Bien echo!", "Registramos el catálogo correctamente!", "success");
+                this.retrieveAllCatalogs();
+                this.closeDialog();
+            })
+            .catch(error => {
+                this.alertService().showHttpError(this, error.response);
+            });
+        }
+    }
 
 
 }

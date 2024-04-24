@@ -8,7 +8,7 @@ export interface ICatalog {
     last_modified_by?: string | null;
     created_at?: string | null;
     updated_at?: string | null;
-    status?: string | null;
+    status?: boolean | null;
   }
   
   export class Catalog implements ICatalog {
@@ -22,7 +22,7 @@ export interface ICatalog {
       last_modified_by?: string | null,
       created_at?: string | null,
       updated_at?: string | null,
-      status?: string | null
+      status?: boolean | null
     ) {}
   }
   

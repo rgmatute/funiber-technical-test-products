@@ -26,6 +26,7 @@ import {
   BInputGroupPrepend,
   BNav,
   BInputGroupAppend,
+  BFormTextarea,
 } from 'bootstrap-vue';
 
 export function initBootstrapVue(vue) {
@@ -57,4 +58,5 @@ export function initBootstrapVue(vue) {
   vue.component('b-input-group-prepend', BInputGroupPrepend);
   vue.component('b-nav', BNav);
   vue.component('b-input-group-append', BInputGroupAppend);
+  vue.component('b-form-textarea', BFormTextarea);
 }

@@ -47,8 +47,9 @@ export default class CatalogService {
     });
   }
 
-  public create(entity: ICatalog): Promise<ICatalog> {
-    return new Promise<ICatalog>((resolve, reject) => {
+  public create(entity: any): Promise<any> {
+    console.log("create-", entity);
+    return new Promise<any>((resolve, reject) => {
       axios
         .post(`${CATALOGOS}`, entity)
         .then(res => {
@@ -60,8 +61,8 @@ export default class CatalogService {
     });
   }
 
-  public update(entity: ICatalog): Promise<ICatalog> {
-    return new Promise<ICatalog>((resolve, reject) => {
+  public update(entity: ICatalog): Promise<any> {
+    return new Promise<any>((resolve, reject) => {
       axios
         .put(`${CATALOGOS}/${entity.id}`, entity)
         .then(res => {
