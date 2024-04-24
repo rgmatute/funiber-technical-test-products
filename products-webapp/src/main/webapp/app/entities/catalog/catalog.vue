@@ -20,7 +20,7 @@
             <span>No catalogs found</span>
         </div>
 
-        <div class="d-flex justify-content-end">
+        <div class="d-flex justify-content-end" v-if="catalogs && catalogs.length > 0">
             <!-- buscador -->
             <b-form-group label="Search by name" class="mb-0">
                 <b-input-group size="md" class="mb-2">
