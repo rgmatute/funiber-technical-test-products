@@ -14,9 +14,11 @@ class AccountController extends Controller
     use Utils;
 
     private $accountService;
+    private $jwtInfo;
 
-    public function __construct(){
+    public function __construct(Request $request){
         $this->accountService = new AccountService();
+        $this->jwtInfo = JWToken::userInfo($request);
     }
 
     public function login(Request $request)
@@ -33,7 +35,7 @@ class AccountController extends Controller
     {
         $token = $request->header('Authorization');
 
-        $this->accountService->destruirToken($token);
+        $this->accountService->destroyToken($token);
 
         return $this->successOnlyMessage();
     }
@@ -44,7 +46,7 @@ class AccountController extends Controller
             $jwt = new JWToken();
             $token = $request->header('Authorization');
 
-            $jwt->destruirToken($token, null, 0);
+            $jwt->destroyToken($token, null, 0);
 
             //$this->notificarEvent($this->user_id, 'You have logged out');
             return response()->json(['message' => "Session closed successfully"]);
@@ -52,5 +54,12 @@ class AccountController extends Controller
             return response()->json(['message' => $e->getMessage()], 400);
         }
         return response()->json(null);
+    }
+
+    public function accountInfo(Request $request): JsonResponse
+    {
+        $account = $this->accountService->accountInfo($this->jwtInfo);
+
+        return $this->successResponse($account);
     }
 }

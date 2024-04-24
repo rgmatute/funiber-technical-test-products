@@ -66,6 +66,21 @@
             $jwt->destroyToken($token, null, 0);
         }
 
+        public function accountInfo($jwtInfo) {
+            
+            if(!isset($jwtInfo->username)){
+                throw new GenericException('La sesion es incorrecta!', 400);
+            }
+
+            $response = $this->userRepository->findByEmail($jwtInfo->username);
+
+            if(!isset($response)){
+                throw new GenericException("No existen datos con la sesion actual!", 404);
+            }
+
+            return $response;
+        }
+
     }
 
 ?>
