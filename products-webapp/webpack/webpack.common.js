@@ -11,6 +11,11 @@ const { DefinePlugin, EnvironmentPlugin } = require('webpack');
 const { vueLoaderConfig } = require('./vue.utils');
 const config = require('./config');
 
+const configGatewayDev = {
+  target: 'http://localhost:1902',
+  secure: false,
+};
+
 function resolve(dir = '') {
   return path.join(__dirname, '..', dir);
 }
@@ -47,8 +52,8 @@ module.exports = async (env, options) => {
         port: 9060,
         proxy: [
           {
-            context: ['/api', '/services', '/management', '/v3/api-docs', '/h2-console', '/auth'],
-            target: 'http://localhost:8080',
+            context: ['/api/v1', '/services', '/management', '/v3/api-docs', '/h2-console', '/auth'],
+            target: configGatewayDev.target,
             secure: false,
           },
         ],

@@ -9,7 +9,7 @@ export default class AccountService {
   }
 
   public init(): void {
-    this.retrieveProfiles();
+    // this.retrieveProfiles();
   }
 
   public retrieveProfiles(): Promise<boolean> {
@@ -30,15 +30,17 @@ export default class AccountService {
   public retrieveAccount(): Promise<boolean> {
     return new Promise(resolve => {
       axios
-        .get<any>('api/account')
+        .get<any>('api/v1/account')
         .then(response => {
           this.store.commit('authenticate');
-          const account = response.data;
+          const account = response.data.data;
           if (account) {
             this.store.commit('authenticated', account);
-            if (this.store.getters.currentLanguage !== account.langKey) {
-              this.store.commit('currentLanguage', account.langKey);
-            }
+
+            // if (this.store.getters.currentLanguage !== account.langKey) {
+            //   this.store.commit('currentLanguage', account.langKey);
+            // }
+
             if (sessionStorage.getItem('requested-url')) {
               this.router.replace(sessionStorage.getItem('requested-url'));
               sessionStorage.removeItem('requested-url');
@@ -50,7 +52,9 @@ export default class AccountService {
             }
             sessionStorage.removeItem('requested-url');
           }
-          this.translationService.refreshTranslation(this.store.getters.currentLanguage);
+          
+          // this.translationService.refreshTranslation(this.store.getters.currentLanguage);
+          
           resolve(true);
         })
         .catch(() => {

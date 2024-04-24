@@ -99,7 +99,7 @@ setupAxiosInterceptors(
     if (status === 401) {
       // Store logged out state.
       store.commit('logout');
-      if (!url.endsWith('api/account') && !url.endsWith('api/authenticate')) {
+      if (!url.endsWith('api/v1/account') && !url.endsWith('api/v1/account/authenticate')) {
         // Ask for a new authentication
         loginService.openLogin(vue);
         return;
