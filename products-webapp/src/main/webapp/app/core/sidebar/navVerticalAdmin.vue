@@ -4,19 +4,25 @@
       <b-nav-item to="/">
         <span>
           <font-awesome-icon icon="home" class="icon" /> &nbsp;
-          <span>home</span>
+          <span>Home</span>
         </span>
       </b-nav-item>
       <b-nav-item to="/admin/products">
         <span>
           <font-awesome-icon icon="cart-shopping" class="icon" /> &nbsp;
-          <span>Productos</span>
+          <span>Products</span>
+        </span>
+      </b-nav-item>
+      <b-nav-item to="/admin/catalogs">
+        <span>
+          <font-awesome-icon icon="book" class="icon" /> &nbsp;
+          <span>Catalogs</span>
         </span>
       </b-nav-item>
       <b-nav-item to="/history">
         <span>
           <font-awesome-icon icon="file-text" class="icon" /> &nbsp;
-          <span>Historial</span>
+          <span>History</span>
         </span>
       </b-nav-item>
       <hr style="width: -webkit-fill-available; background-color: #ece0e0" />
