@@ -21,6 +21,7 @@ export default class CatalogComponent extends Vue {
     public totalItems = 0;
 
     public searchStringValue = null;
+    private removeId: number = null;
 
 
     public catalogs: ICatalog[] = [];
@@ -111,6 +112,38 @@ export default class CatalogComponent extends Vue {
                 }
             );
     }
+
+    public prepareRemove(instance: ICatalog): void {
+        this.removeId = instance.id;
+        if (<any>this.$refs.removeEntity) {
+            (<any>this.$refs.removeEntity).show();
+        }
+    }
+
+    public closeDialog(): void {
+        (<any>this.$refs.removeEntity).hide();
+    }
+
+    public removeCatalog(): void {
+        this.catalogService()
+          .delete(this.removeId)
+          .then(() => {
+            const message = 'A Catalog is deleted with identifier ' + this.removeId;
+            this.$bvToast.toast(message.toString(), {
+              toaster: 'b-toaster-top-center',
+              title: 'Info',
+              variant: 'danger',
+              solid: true,
+              autoHideDelay: 5000,
+            });
+            this.removeId = null;
+            this.retrieveAllCatalogs();
+            this.closeDialog();
+          })
+          .catch(error => {
+            this.alertService().showHttpError(this, error.response);
+          });
+      }
 
 
 }

@@ -24,10 +24,10 @@
             <!-- buscador -->
             <b-form-group label="Search by name" class="mb-0">
                 <b-input-group size="md" class="mb-2">
-                    <b-form-input id="input-catalogs-search-value" v-model="searchStringValue" v-on:keyup.enter="searchCatalogs()"
-                        placeholder="Enter your name"></b-form-input>
+                    <b-form-input id="input-catalogs-search-value" v-model="searchStringValue"
+                        v-on:keyup.enter="searchCatalogs()" placeholder="Enter your name"></b-form-input>
                     <b-input-group-append>
-                        <b-button variant="primary" size="md">
+                        <b-button variant="primary" size="md" @click="searchCatalogs()">
                             <font-awesome-icon icon="search" class="small"></font-awesome-icon>
                             Search
                         </b-button>
@@ -35,8 +35,6 @@
                 </b-input-group>
             </b-form-group>
         </div>
-
-        <!-- <br> -->
 
         <div class="table-responsive" v-if="catalogs && catalogs.length > 0">
             <table class="table table-striped table-sm table-bordered" aria-describedby="catalogs">
@@ -61,7 +59,7 @@
                         <td class="align-middle">{{ catalog.created_by }}</td>
 
                         <td class="align-middle">
-                            <b-badge v-if="catalog.status === 1" variant="success">ACTIVE</b-badge>
+                            <b-badge v-if="catalog.status == '1'" variant="success">ACTIVE</b-badge>
                             <b-badge v-else variant="danger">INACTIVE</b-badge>
                         </td>
                         <td class="align-middle">
@@ -69,7 +67,7 @@
                                 <font-awesome-icon icon="pencil" size="sm"></font-awesome-icon> Edit
                             </b-button>
 
-                            <b-button variant="danger" size="sm">
+                            <b-button variant="danger" size="sm" @click="prepareRemove(catalog)">
                                 <font-awesome-icon icon="trash" size="sm"></font-awesome-icon> Detele
                             </b-button>
                         </td>
@@ -77,6 +75,33 @@
                 </tbody>
             </table>
         </div>
+
+
+
+        <!-- modal de eliminar -->
+        <b-modal ref="removeEntity" id="removeEntity">
+            <span slot="modal-title"><span id="rodechStoreApp.catalog.delete.question"
+                    data-cy="catalogDeleteDialogHeading">Confirmar operación de eliminación</span></span>
+            <div class="modal-body">
+                <p id="jhi-delete-catalog-heading">¿Está seguro de que desea eliminar el catalogo seleccionado?</p>
+                <div>
+                    <b-alert show variant="warning">
+                        <strong>¡Advertencia¡</strong> El Catalogo solo , se quedará inactivo, pero no será posible visualizarlo.
+                    </b-alert>
+                </div>
+            </div>
+            <div slot="modal-footer">
+                <button type="button" class="btn btn-secondary" v-on:click="closeDialog()">
+                    <font-awesome-icon icon="ban"></font-awesome-icon>
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-danger" id="jhi-confirm-delete-catalog"
+                    data-cy="entityConfirmDeleteButton" v-on:click="removeCatalog()">
+                    <font-awesome-icon icon="trash"></font-awesome-icon>
+                    Eliminar
+                </button>
+            </div>
+        </b-modal>
 
         <div v-show="catalogs && catalogs.length > 0">
             <div class="row justify-content-center">

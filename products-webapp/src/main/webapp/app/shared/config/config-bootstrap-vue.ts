@@ -25,6 +25,7 @@ import {
   BInputGroup,
   BInputGroupPrepend,
   BNav,
+  BInputGroupAppend,
 } from 'bootstrap-vue';
 
 export function initBootstrapVue(vue) {
@@ -55,4 +56,5 @@ export function initBootstrapVue(vue) {
   vue.component('b-input-group', BInputGroup);
   vue.component('b-input-group-prepend', BInputGroupPrepend);
   vue.component('b-nav', BNav);
+  vue.component('b-input-group-append', BInputGroupAppend);
 }
