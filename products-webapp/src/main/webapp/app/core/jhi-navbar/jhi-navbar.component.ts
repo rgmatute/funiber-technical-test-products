@@ -4,10 +4,12 @@ import AccountService from '@/account/account.service';
 import TranslationService from '@/locale/translation.service';
 
 import EntitiesMenu from '@/entities/entities-menu.vue';
+import NavbarVertical from './navbar-vertical.vue';
 
 @Component({
   components: {
     'entities-menu': EntitiesMenu,
+    'navbar-vertical': NavbarVertical
   },
 })
 export default class JhiNavbar extends Vue {
