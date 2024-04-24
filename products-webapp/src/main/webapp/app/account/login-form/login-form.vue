@@ -8,13 +8,13 @@
       </div>
       <div class="col-md-8">
         <b-form role="form" v-on:submit.prevent="doLogin()">
-          <b-form-group v-bind:label="$t('global.form[\'username.label\']')" label-for="username">
+          <b-form-group v-bind:label="$t('global.form[\'email.label\']')" label-for="username">
             <b-form-input
               id="username"
               type="text"
               name="username"
               autofocus
-              v-bind:placeholder="$t('global.form[\'username.placeholder\']')"
+              v-bind:placeholder="$t('global.form[\'email.placeholder\']')"
               v-model="login"
               data-cy="username"
             >

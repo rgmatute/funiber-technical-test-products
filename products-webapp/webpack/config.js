@@ -5,7 +5,8 @@ const path = require('path');
 module.exports = {
   serverApiUrl: '',
   // APP_VERSION is passed as an environment variable from the Gradle / Maven build tasks.
-  version: process.env.hasOwnProperty('APP_VERSION') ? process.env.APP_VERSION : 'UNKNOWN',
+  // version: process.env.hasOwnProperty('APP_VERSION') ? process.env.APP_VERSION : 'UNKNOWN',
+  version: '1.0.0',
 
   dev: {
     hotReload: true,

@@ -1,6 +1,6 @@
 {
   "global": {
-    "title": "Products_webapp",
+    "title": "Productos",
     "browsehappy": "Está usando un navegador <strong>no actualizado</strong>. Por favor, <a href=\"http://browsehappy.com/?locale=es\">actualice su navegador</a> para mejorar su experiencia.",
     "menu": {
       "home": "Inicio",
@@ -49,7 +49,7 @@
         "authenticated": {
           "prefix": "Si desea ",
           "link": "iniciar sesión",
-          "suffix": ", puede intentar con las cuentas predeterminadas:<br/>- Administrador (usuario=\"admin\" y contraseña=\"admin\") <br/>- Usuario (usuario=\"user\" y contraseña=\"user\")."
+          "suffix": ", puede intentar con las cuentas predeterminadas:<br/>- Administrador (correo=\"rgmatute91@gmail.com\" y contraseña=\"Funiber2@24\")."
         },
         "register": {
           "noaccount": "¿Aún no tienes una cuenta?",
