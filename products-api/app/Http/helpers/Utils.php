@@ -49,7 +49,8 @@ trait Utils
         return response()->json([
             'success' => true,
             'id_token' => $bearerToken
-        ], $statusCode);
+        ], $statusCode)
+        ->header('Authorization', 'Bearer ' . $bearerToken);;
     }
 
     public function validateRequest(array $rules)
