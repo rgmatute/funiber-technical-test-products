@@ -9,13 +9,13 @@
       </b-nav-item>
       <b-nav-item to="/admin/products">
         <span>
-          <font-awesome-icon icon="users" class="icon" /> &nbsp;
+          <font-awesome-icon icon="cart-shopping" class="icon" /> &nbsp;
           <span>Productos</span>
         </span>
       </b-nav-item>
       <b-nav-item to="/history">
         <span>
-          <font-awesome-icon icon="bell" class="icon" /> &nbsp;
+          <font-awesome-icon icon="file-text" class="icon" /> &nbsp;
           <span>Historial</span>
         </span>
       </b-nav-item>

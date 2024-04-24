@@ -13,6 +13,7 @@
                     <span>Compras Realizadas</span>
                 </span>
             </b-nav-item>
+            <hr style="width: -webkit-fill-available; background-color: #ece0e0" />
             <b-nav-item v-on:click="logout()">
                 <span>
                     <font-awesome-icon icon="sign-in-alt" class="icon"/> &nbsp;
