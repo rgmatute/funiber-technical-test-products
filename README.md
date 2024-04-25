@@ -15,6 +15,12 @@
 
 ## FRONT - END ( `development in Vue-2 with Node v18.17.1` )
 
+### Preparar ambiente ( sin docker )
+- 1) Descargar proyecto y acceder a la carpeta `products_webapp`
+- 2) Aplicar comando `npm install`
+- 3) Aplicat comando `npm start`
+- 4) Acceder a `htts://localhost:9000`
+
 ### CATEGORIAS DE LOS PRODUCTOS
 
 ![image](https://github.com/rgmatute/funiber-technical-test-products/assets/39324527/23d0a163-0e1b-4e48-908a-731e27279706)
