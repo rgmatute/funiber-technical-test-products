@@ -19,12 +19,12 @@
           <span>Catalogs</span>
         </span>
       </b-nav-item>
-      <b-nav-item to="/history">
+      <!-- <b-nav-item to="/history">
         <span>
           <font-awesome-icon icon="file-text" class="icon" /> &nbsp;
           <span>History</span>
         </span>
-      </b-nav-item>
+      </b-nav-item> -->
       <hr style="width: -webkit-fill-available; background-color: #ece0e0" />
       <b-nav-item v-on:click="logout()">
         <span>
