@@ -2,7 +2,7 @@ import axios from 'axios';
 import {PRODUCTOS} from '@/Urls';
 import buildPaginationQueryOpts from "@/shared/sort/sorts";
 import { IProduct } from '@/shared/model/product.model';
-import buildPaginationQueryOptsUtils from '@/Utils';
+import {buildPaginationQueryOptsUtils} from '@/Utils';
 
 export default class ProductService {
 

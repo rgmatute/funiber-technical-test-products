@@ -2,7 +2,7 @@ import axios from 'axios';
 import {CATALOGOS} from '@/Urls';
 import buildPaginationQueryOpts from "@/shared/sort/sorts";
 import { ICatalog } from '@/shared/model/catalog.model';
-import buildPaginationQueryOptsUtils from '@/Utils';
+import {buildPaginationQueryOptsUtils} from '@/Utils';
 
 const baseApiUrl = 'api/products';
 

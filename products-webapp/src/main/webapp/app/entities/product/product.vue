@@ -140,11 +140,41 @@
                 <span>Historial de <strong class="text-danger">"{{ product.name }} "</strong></span>
             </span>
             <div class="modal-body">
-                <div>
-                    <b-alert show variant="warning">
-                        <strong>¡Advertencia¡</strong> Espacio en construcción.
+                <div class="table-responsive" v-if="historys && historys.length > 0">
+                    <table class="table table-striped table-sm table-bordered responsive" aria-describedby="products">
+                        <thead class="text-center">
+                            <tr>
+                                <th scope="row"><span>Producto</span></th>
+                                <th scope="row"><span>Evento</span></th>
+                                <th scope="row"><span>Ejecutado por</span></th>
+                                <th scope="row"><span>Fecha</span></th>
+                                <th scope="row">Cambios</th>
+                            </tr>
+                        </thead>
+                        <tbody class="text-center">
+                            <tr v-for="history in historys" :key="history.id" data-cy="entityTable">
+                                <td class="align-middle">{{ product.name }}</td>
+                                <td class="align-middle">
+                                    <b-badge variant="warning">{{ history.event }}</b-badge>
+                                </td>
+                                <td class="align-middle small">{{ history.created_by }}</td>
+                                <td class="align-middle small">{{ formatDate(history.created_at, 'DD-MM-YYYY h:mm:ss')
+                                    }}</td>
+                                <td class="align-middle small" style="background-color: black;">
+                                    <pre style="color: greenyellow !important">{{ obtenerCambios(history.before, history.after) }}</pre>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div v-if="historys && historys.length == 0">
+                    <b-alert show variant="danger">
+                        <strong>¡Upts¡</strong> No existen eventos ejecutados, del producto seleccionado!.
                     </b-alert>
                 </div>
+                <!-- <div>
+                    <pre>{{ historys }}</pre>
+                </div> -->
             </div>
             <div slot="modal-footer">
                 <button type="button" class="btn btn-secondary" v-on:click="closeDialog()">
@@ -169,7 +199,8 @@
                     <div class="col-md-6 col-sm-12">
                         <b-form-group label="Categoria para el Producto" class="mr-2">
                             <b-form-select v-model="product.catalog_id">
-                                <b-form-select-option :value="undefined" disabled>-- Seleccione una categoria --</b-form-select-option>
+                                <b-form-select-option :value="undefined" disabled>-- Seleccione una categoria
+                                    --</b-form-select-option>
                                 <option v-for="catalogItem in catalogs" :value="catalogItem.id" :key="catalogItem.id">
                                     {{ catalogItem.catalog_name }}
                                 </option>
@@ -193,7 +224,8 @@
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <b-form-group label="Discount">
-                            <b-form-input type="number" placeholder="Discount" v-model="product.discount"></b-form-input>
+                            <b-form-input type="number" placeholder="Discount"
+                                v-model="product.discount"></b-form-input>
                         </b-form-group>
                     </div>
                     <div class="col-md-6 col-sm-12">
@@ -203,7 +235,8 @@
                     </div>
                     <div class="col-md-6 col-sm-12">
                         <b-form-group label="Description">
-                            <b-form-textarea placeholder="Description" rows="3" max-rows="6" v-model="product.description"></b-form-textarea>
+                            <b-form-textarea placeholder="Description" rows="3" max-rows="6"
+                                v-model="product.description"></b-form-textarea>
                         </b-form-group>
                     </div>
                 </div>
@@ -230,8 +263,8 @@
             </span>
             <div class="modal-body">
                 <b-form-group label="Filter by fields selected" v-slot="{ ariaDescribedby }">
-                    <b-form-radio-group id="radio-group-2" v-model="filterKeySelected" :aria-describedby="ariaDescribedby"
-                        name="radio-sub-component">
+                    <b-form-radio-group id="radio-group-2" v-model="filterKeySelected"
+                        :aria-describedby="ariaDescribedby" name="radio-sub-component">
                         <b-form-radio value="serial_code">Filter by code</b-form-radio>
                         <b-form-radio value="name">Filter by name</b-form-radio>
                         <b-form-radio value="description">Filter by description</b-form-radio>

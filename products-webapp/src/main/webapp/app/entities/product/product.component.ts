@@ -5,6 +5,10 @@ import AlertService from '@/shared/alert/alert.service';
 import CatalogService from '../catalog/catalog.service';
 import { ICatalog } from '@/shared/model/catalog.model';
 import Swal from 'sweetalert2';
+import { IHistory } from '@/shared/model/history.model';
+import axios from 'axios';
+import { HISTORY_BY_PRODUCT_ID } from '@/Urls';
+import moment from 'moment';
 
 @Component
 export default class ProductComponent extends Vue {
@@ -49,6 +53,8 @@ export default class ProductComponent extends Vue {
     public products: IProduct[] = [];
 
     public catalogs: ICatalog[] = [];
+
+    public historys: IHistory[] = [];
 
     public mounted(): void {
         console.log("ProductComponent::mounted");
@@ -202,6 +208,8 @@ export default class ProductComponent extends Vue {
 
         this.product = product;
 
+        this.retrieveAllHistoryByProductId(product.id);
+
         if (<any>this.$refs.historyEntity) {
             (<any>this.$refs.historyEntity).show();
         }
@@ -274,4 +282,39 @@ export default class ProductComponent extends Vue {
                 }
             );
     }
+
+    public retrieveAllHistoryByProductId(productId: number): void {
+
+        axios
+            .get(HISTORY_BY_PRODUCT_ID(productId))
+            .then(res => {
+                this.historys = res.data.data;
+            })
+            .catch(err => {
+                this.alertService().showHttpError(this, err.response);
+            });
+    }
+
+    public formatDate = (dateString: string, format: string) => {
+        return moment(dateString).format(format);
+    }
+
+    public obtenerCambios(jsonA: any, jsonB: any) {
+        const cambios = {};
+        jsonA = JSON.parse(jsonA);
+        jsonB = JSON.parse(jsonB);
+    
+        // Comparar cada atributo de jsonA con jsonB
+        for (const key in jsonA) {
+            if (jsonA.hasOwnProperty(key) && jsonB.hasOwnProperty(key)) {
+                // Si los valores son diferentes, agregar al objeto de cambios
+                if (jsonA[key] !== jsonB[key]) {
+                    cambios[key] = jsonB[key];
+                }
+            }
+        }
+    
+        return cambios;
+    }
+    
 }
