@@ -107,6 +107,36 @@
             </table>
         </div>
 
+        <!-- modal de eliminar -->
+        <b-modal ref="removeEntity" id="removeEntity">
+            <span slot="modal-title"><span id="rodechStoreApp.product.delete.question"
+                    data-cy="productDeleteDialogHeading">Confirmar operación de eliminación</span></span>
+            <div class="modal-body">
+                <p id="jhi-delete-product-heading">¿Está seguro de que desea eliminar el producto seleccionado?</p>
+                <div class="text-center">
+                    <p><strong>Producto: </strong> {{ product.name }}</p>
+                    <p><strong>Stock: </strong> {{ product.stock }}</p>
+                    <p><strong>Precio: </strong> ${{ product.price }}</p>
+                </div>
+                <div>
+                    <b-alert show variant="warning">
+                        <strong>¡Advertencia¡</strong> El producto solo se quedará Inactivo.
+                    </b-alert>
+                </div>
+            </div>
+            <div slot="modal-footer">
+                <button type="button" class="btn btn-secondary" v-on:click="closeDialog()">
+                    <font-awesome-icon icon="ban"></font-awesome-icon>
+                    Cancelar
+                </button>
+                <button type="button" class="btn btn-danger" id="jhi-confirm-delete-product"
+                    data-cy="entityConfirmDeleteButton" v-on:click="onRemove()">
+                    <font-awesome-icon icon="trash"></font-awesome-icon>
+                    Eliminar
+                </button>
+            </div>
+        </b-modal>
+
 
         <div v-show="products && products.length > 0">
             <div class="row justify-content-center">

@@ -108,5 +108,40 @@ export default class ProductComponent extends Vue {
 
     public onPrepareRemove(product: IProduct): void {
 
+        this.removeId = product.id;
+        this.product = product;
+
+        if (<any>this.$refs.removeEntity) {
+            (<any>this.$refs.removeEntity).show();
+        }
+    }
+
+    public closeDialog(): void {
+        (<any>this.$refs.removeEntity).hide();
+        (<any>this.$refs.createdEditEntity).hide();
+    }
+
+    public onRemove(): void {
+        this.productService()
+          .delete(this.removeId)
+          .then(() => {
+            const message = 'A Product is deleted with identifier ' + this.removeId;
+            this.$bvToast.toast(message.toString(), {
+              toaster: 'b-toaster-top-center',
+              title: 'Info',
+              variant: 'danger',
+              solid: true,
+              autoHideDelay: 5000,
+            });
+            
+            this.removeId = null;
+            this.product = {};
+
+            this.retrieveAll();
+            this.closeDialog();
+          })
+          .catch(error => {
+            this.alertService().showHttpError(this, error.response);
+          });
     }
 }
