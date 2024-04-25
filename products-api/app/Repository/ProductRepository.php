@@ -10,7 +10,10 @@ class ProductRepository
 
     public function findAll(): LengthAwarePaginator
     {
-        return Product::with('catalog')->where('status', true)->paginate(20);
+
+        $perPage = request()->input('size', 10) ?? 10;
+
+        return Product::with('catalog')->where('status', true)->paginate($perPage);
     }
 
     public function findById( int $id){
@@ -30,14 +33,17 @@ class ProductRepository
     }
 
     public function search($key, $value) {
+
+        $perPage = request()->input('size', 10) ?? 10;
+
         if (strpos($key, "stock") !== false) {
             if ($value == -1) {
-                return Product::with('catalog')->where($key, '>', 0)->paginate();
+                return Product::with('catalog')->where($key, '>', 0)->paginate($perPage);
             } else {
-                return Product::with('catalog')->where($key, '=', $value)->paginate();
+                return Product::with('catalog')->where($key, '=', $value)->paginate($perPage);
             }
         } else {
-            return Product::with('catalog')->where($key, 'like', '%'.$value.'%')->paginate();
+            return Product::with('catalog')->where($key, 'like', '%'.$value.'%')->paginate($perPage);
         }
     }
 
