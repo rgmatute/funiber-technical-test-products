@@ -29,6 +29,8 @@ import {
   BFormTextarea,
   BAvatar,
   VBTooltip,
+  BFormRadioGroup,
+  BFormRadio,
 } from 'bootstrap-vue';
 
 export function initBootstrapVue(vue) {
@@ -63,4 +65,6 @@ export function initBootstrapVue(vue) {
   vue.component('b-form-textarea', BFormTextarea);
   vue.component('b-avatar', BAvatar);
   vue.directive('b-tooltip', VBTooltip);
+  vue.component('b-form-radio-group', BFormRadioGroup);
+  vue.component('b-form-radio', BFormRadio);
 }

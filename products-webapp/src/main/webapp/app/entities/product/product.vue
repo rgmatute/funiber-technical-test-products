@@ -23,7 +23,7 @@
             <b-form-group label="Search by filter" class="mb-0">
                 <b-input-group size="md" class="mb-2">
                     <b-input-group-prepend>
-                        <b-button variant="secondary" size="md" @click="onSearch()">
+                        <b-button variant="secondary" size="md" @click="onSetting()">
                             <font-awesome-icon icon="cog" class="small"></font-awesome-icon>
                             Setting
                         </b-button>
@@ -84,21 +84,19 @@
                             <b-badge v-else variant="danger">INACTIVE</b-badge>
                         </td>
                         <td class="align-middle">
-                            <b-button variant="primary" size="sm" @click="onEdit(product)"
-                            v-b-tooltip.left
-                            title="Editar Producto!">
+                            <b-button variant="primary" size="sm" @click="onEdit(product)" v-b-tooltip.left
+                                title="Editar Producto!">
                                 <font-awesome-icon icon="pencil" size="sm"></font-awesome-icon>
                             </b-button>
 
-                            <b-button variant="danger" size="sm" @click="onPrepareRemove(product)" 
-                            v-b-tooltip.left
-                            title="Eliminar Producto!">
+                            <b-button variant="danger" size="sm" @click="onPrepareRemove(product)" v-b-tooltip.left
+                                title="Eliminar Producto!">
                                 <font-awesome-icon icon="trash" size="sm"></font-awesome-icon>
                             </b-button>
 
-                            <b-button variant="secondary" size="sm" @click="onPrepareRemove(product)"
+                            <b-button variant="secondary" size="sm" @click="onHistory(product)"
                                 v-b-tooltip.left.html
-                                title="Ver <strong>Historial</strong> de eventos">
+                                title="Ver <strong class='text-warning'>Historial</strong> del producto!">
                                 <font-awesome-icon icon="eye" size="sm"></font-awesome-icon>
                             </b-button>
                         </td>
@@ -137,7 +135,83 @@
             </div>
         </b-modal>
 
+        <!-- modal de historial -->
+        <b-modal ref="historyEntity" id="historyEntity" size="lg">
+            <span slot="modal-title">
+                <span>Historial de <strong class="text-danger">"{{ product.name }} "</strong></span>
+            </span>
+            <div class="modal-body">
+                <div>
+                    <b-alert show variant="warning">
+                        <strong>¡Advertencia¡</strong> Espacio en construcción.
+                    </b-alert>
+                </div>
+            </div>
+            <div slot="modal-footer">
+                <button type="button" class="btn btn-secondary" v-on:click="closeDialog()">
+                    <font-awesome-icon icon="ban"></font-awesome-icon>
+                    Cerrar
+                </button>
+            </div>
+        </b-modal>
 
+        <!-- crear y editar modal -->
+        <b-modal ref="createdEditEntity" id="createdEditEntity">
+            <span slot="modal-title">
+                <span>{{ createdTitleModal }}</span>
+            </span>
+            <div class="modal-body">
+                <div>
+                    <b-alert show variant="warning">
+                        <strong>¡Advertencia¡</strong> Espacio en construcción.
+                    </b-alert>
+                </div>
+            </div>
+            <div slot="modal-footer">
+                <button type="button" class="btn btn-secondary" v-on:click="closeDialog()">
+                    <font-awesome-icon icon="ban"></font-awesome-icon>
+                    Cancelar
+                </button>
+                <b-button variant="primary" v-on:click="onSave()">
+                    <font-awesome-icon icon="save"></font-awesome-icon>
+                    Guardar
+                </b-button>
+            </div>
+        </b-modal>
+
+        <!-- modal de condifuración de filtro -->
+        <b-modal ref="settingEntity" id="settingEntity" size="sm">
+            <span slot="modal-title">
+                <span>Configuración de filtro</span>
+            </span>
+            <div class="modal-body">
+                <b-form-group label="Filter by fields selected" v-slot="{ ariaDescribedby }">
+                    <b-form-radio-group
+                        id="radio-group-2"
+                        v-model="filterSelected"
+                        :aria-describedby="ariaDescribedby"
+                        name="radio-sub-component"
+                    >
+                        <b-form-radio value="serial_code">filter by code</b-form-radio>
+                        <b-form-radio value="name">filter by name</b-form-radio>
+                        <b-form-radio value="description">filter by description</b-form-radio>
+                        <b-form-radio value="price">filter by price</b-form-radio>
+                        <b-form-radio value="iva">filter by iva</b-form-radio>
+                        <b-form-radio value="discount">filter by discount</b-form-radio>
+                        <b-form-radio value="stock">filter by stock</b-form-radio>
+                    </b-form-radio-group>
+                </b-form-group>
+            </div>
+            <div slot="modal-footer">
+                <button type="button" class="btn btn-secondary" v-on:click="closeDialog()">
+                    <font-awesome-icon icon="ban"></font-awesome-icon>
+                    Cerrar
+                </button>
+            </div>
+        </b-modal>
+
+
+        <!-- paginación -->
         <div v-show="products && products.length > 0">
             <div class="row justify-content-center">
                 <jhi-item-count :page="page" :total="queryCount" :itemsPerPage="itemsPerPage"></jhi-item-count>

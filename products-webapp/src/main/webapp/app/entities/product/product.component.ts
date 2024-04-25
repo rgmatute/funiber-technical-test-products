@@ -36,6 +36,7 @@ export default class ProductComponent extends Vue {
         status: null,
         catalog_id: null,
     };
+    public filterSelected = 'name';
 
 
     public products: IProduct[] = [];
@@ -96,6 +97,15 @@ export default class ProductComponent extends Vue {
 
     public onRegister(): void {
 
+        this.createdTitleModal = 'Crear Producto';
+
+        this.removeId = null;
+        this.product = {};
+
+        if (<any>this.$refs.createdEditEntity) {
+            (<any>this.$refs.createdEditEntity).show();
+        }
+
     }
 
     public onSearch(): void {
@@ -104,6 +114,14 @@ export default class ProductComponent extends Vue {
 
     public onEdit(product: IProduct): void {
 
+        this.createdTitleModal = 'Editar Producto';
+
+        this.removeId = product.id;
+        this.product = product;
+
+        if (<any>this.$refs.createdEditEntity) {
+            (<any>this.$refs.createdEditEntity).show();
+        }
     }
 
     public onPrepareRemove(product: IProduct): void {
@@ -119,29 +137,53 @@ export default class ProductComponent extends Vue {
     public closeDialog(): void {
         (<any>this.$refs.removeEntity).hide();
         (<any>this.$refs.createdEditEntity).hide();
+        (<any>this.$refs.historyEntity).hide();
+        (<any>this.$refs.settingEntity).hide();
     }
 
     public onRemove(): void {
         this.productService()
-          .delete(this.removeId)
-          .then(() => {
-            const message = 'A Product is deleted with identifier ' + this.removeId;
-            this.$bvToast.toast(message.toString(), {
-              toaster: 'b-toaster-top-center',
-              title: 'Info',
-              variant: 'danger',
-              solid: true,
-              autoHideDelay: 5000,
-            });
-            
-            this.removeId = null;
-            this.product = {};
+            .delete(this.removeId)
+            .then(() => {
+                const message = 'A Product is deleted with identifier ' + this.removeId;
+                this.$bvToast.toast(message.toString(), {
+                    toaster: 'b-toaster-top-center',
+                    title: 'Info',
+                    variant: 'danger',
+                    solid: true,
+                    autoHideDelay: 5000,
+                });
 
-            this.retrieveAll();
-            this.closeDialog();
-          })
-          .catch(error => {
-            this.alertService().showHttpError(this, error.response);
-          });
+                this.removeId = null;
+                this.product = {};
+
+                this.retrieveAll();
+                this.closeDialog();
+            })
+            .catch(error => {
+                this.alertService().showHttpError(this, error.response);
+            });
+    }
+
+    public onHistory(product: IProduct): void {
+
+        this.product = product;
+
+        if (<any>this.$refs.historyEntity) {
+            (<any>this.$refs.historyEntity).show();
+        }
+    }
+
+    public onSave(): void {
+
+        this.closeDialog();
+
+    }
+
+    public onSetting(): void {
+
+        if (<any>this.$refs.settingEntity) {
+            (<any>this.$refs.settingEntity).show();
+        }
     }
 }
