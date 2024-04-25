@@ -19,8 +19,10 @@ export default class ProductComponent extends Vue {
     public reverse = false;
     public totalItems = 0;
 
+    public filterSelected = 'category';
     public searchStringValue = null;
     private removeId: number = null;
+    public filterByStockEnabled = true;
 
     // crear y editar catalogo
     public createdTitleModal = '';
@@ -36,8 +38,6 @@ export default class ProductComponent extends Vue {
         status: null,
         catalog_id: null,
     };
-    public filterSelected = 'name';
-
 
     public products: IProduct[] = [];
 

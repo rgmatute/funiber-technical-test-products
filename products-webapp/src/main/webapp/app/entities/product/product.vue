@@ -20,7 +20,7 @@
 
         <div class="d-flex justify-content-end" v-if="products && products.length > 0">
             <!-- buscador -->
-            <b-form-group label="Search by filter" class="mb-0">
+            <b-form-group :label="'Search by field --> ' + filterSelected" class="mb-0">
                 <b-input-group size="md" class="mb-2">
                     <b-input-group-prepend>
                         <b-button variant="secondary" size="md" @click="onSetting()">
@@ -94,8 +94,7 @@
                                 <font-awesome-icon icon="trash" size="sm"></font-awesome-icon>
                             </b-button>
 
-                            <b-button variant="secondary" size="sm" @click="onHistory(product)"
-                                v-b-tooltip.left.html
+                            <b-button variant="secondary" size="sm" @click="onHistory(product)" v-b-tooltip.left.html
                                 title="Ver <strong class='text-warning'>Historial</strong> del producto!">
                                 <font-awesome-icon icon="eye" size="sm"></font-awesome-icon>
                             </b-button>
@@ -186,20 +185,22 @@
             </span>
             <div class="modal-body">
                 <b-form-group label="Filter by fields selected" v-slot="{ ariaDescribedby }">
-                    <b-form-radio-group
-                        id="radio-group-2"
-                        v-model="filterSelected"
-                        :aria-describedby="ariaDescribedby"
-                        name="radio-sub-component"
-                    >
-                        <b-form-radio value="serial_code">filter by code</b-form-radio>
-                        <b-form-radio value="name">filter by name</b-form-radio>
-                        <b-form-radio value="description">filter by description</b-form-radio>
-                        <b-form-radio value="price">filter by price</b-form-radio>
-                        <b-form-radio value="iva">filter by iva</b-form-radio>
-                        <b-form-radio value="discount">filter by discount</b-form-radio>
-                        <b-form-radio value="stock">filter by stock</b-form-radio>
+                    <b-form-radio-group id="radio-group-2" v-model="filterSelected" :aria-describedby="ariaDescribedby"
+                        name="radio-sub-component">
+                        <b-form-radio value="serial_code">Filter by code</b-form-radio>
+                        <b-form-radio value="name">Filter by name</b-form-radio>
+                        <b-form-radio value="description">Filter by description</b-form-radio>
+                        <b-form-radio value="price">Filter by price</b-form-radio>
+                        <b-form-radio value="iva">Filter by iva</b-form-radio>
+                        <b-form-radio value="discount">Filter by discount</b-form-radio>
+                        <b-form-radio value="stock">Filter by stock</b-form-radio>
+                        <b-form-radio value="category">Filter by category</b-form-radio>
                     </b-form-radio-group>
+
+                    <b-form-checkbox id="checkbox-1" v-model="filterByStockEnabled" name="checkbox-1" value="true"
+                        unchecked-value="not_accepted">
+                        <b>filtrar solo si tiene stock</b>
+                    </b-form-checkbox>
                 </b-form-group>
             </div>
             <div slot="modal-footer">

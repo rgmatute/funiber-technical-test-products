@@ -31,6 +31,8 @@ import {
   VBTooltip,
   BFormRadioGroup,
   BFormRadio,
+  BFormSelect,
+  BFormSelectOption,
 } from 'bootstrap-vue';
 
 export function initBootstrapVue(vue) {
@@ -67,4 +69,6 @@ export function initBootstrapVue(vue) {
   vue.directive('b-tooltip', VBTooltip);
   vue.component('b-form-radio-group', BFormRadioGroup);
   vue.component('b-form-radio', BFormRadio);
+  vue.component('b-form-select', BFormSelect);
+  vue.component('b-form-select-option', BFormSelectOption);
 }
