@@ -43,6 +43,13 @@ class ProductRepository
                 return Product::with('catalog')->where($key, '=', $value)->paginate($perPage);
             }
         } else {
+            if (strpos($key, "category") !== false) {
+                return Product::whereHas('catalog', function ($query) use ($key, $value) {
+                    $query->where('catalog_name', 'like', '%'.$value.'%');
+                })
+                ->with('catalog')->paginate($perPage);
+            }
+
             return Product::with('catalog')->where($key, 'like', '%'.$value.'%')->paginate($perPage);
         }
     }
@@ -51,7 +58,7 @@ class ProductRepository
         return Product::with('catalog')->where('id', $id)->where('status', true)->first();
     }
 
-    public function findByIdAndStatus( int $id, bool $status){
+    public function findByIdAndStatus( $id, $status){
         return Product::where('id', $id)->where('status', $status)->first();
     }
 }
