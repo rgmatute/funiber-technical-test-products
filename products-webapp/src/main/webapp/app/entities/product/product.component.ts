@@ -2,12 +2,16 @@ import { IProduct } from '@/shared/model/product.model';
 import { Component, Vue, Inject } from 'vue-property-decorator';
 import ProductService from './product.service';
 import AlertService from '@/shared/alert/alert.service';
+import CatalogService from '../catalog/catalog.service';
+import { ICatalog } from '@/shared/model/catalog.model';
+import Swal from 'sweetalert2';
 
 @Component
 export default class ProductComponent extends Vue {
 
     @Inject('productService') private productService: () => ProductService;
     @Inject('alertService') private alertService: () => AlertService;
+    @Inject('catalogService') private catalogService: () => CatalogService;
 
     public isFetching = false;
 
@@ -30,16 +34,21 @@ export default class ProductComponent extends Vue {
         serial_code: null,
         name: null,
         description: null,
-        price: null,
-        iva: null,
-        discount: null,
-        resource_id: null,
-        stock: null,
-        status: null,
+        price: 10,
+        iva: 15,
+        discount: 0,
+        resource_id: "",
+        stock: 0,
+        status: true,
         catalog_id: null,
+        catalog: {
+            id: null
+        }
     };
 
     public products: IProduct[] = [];
+
+    public catalogs: ICatalog[] = [];
 
     public mounted(): void {
         console.log("ProductComponent::mounted");
@@ -102,6 +111,8 @@ export default class ProductComponent extends Vue {
         this.removeId = null;
         this.product = {};
 
+        this.retrieveAllCatalogs();
+
         if (<any>this.$refs.createdEditEntity) {
             (<any>this.$refs.createdEditEntity).show();
         }
@@ -118,6 +129,8 @@ export default class ProductComponent extends Vue {
 
         this.removeId = product.id;
         this.product = product;
+
+        this.retrieveAllCatalogs();
 
         if (<any>this.$refs.createdEditEntity) {
             (<any>this.$refs.createdEditEntity).show();
@@ -176,7 +189,45 @@ export default class ProductComponent extends Vue {
 
     public onSave(): void {
 
-        this.closeDialog();
+        var data = {
+            serial_code: this.product.serial_code,
+            name: this.product.name,
+            description: this.product.description,
+            price: this.product.price,
+            iva: this.product.iva,
+            discount: this.product.discount,
+            resource_id: "",
+            stock: this.product.stock,
+            status: true,
+            catalog_id: this.product.catalog_id
+        };
+
+        if(this.product.id) {
+            this.productService()
+            .update({
+                id: this.product.id,
+                ...data
+            })
+            .then(() => {
+                Swal.fire("Bien Hecho!", "Actualizamos el Producto correctamente!", "success");
+                this.retrieveAllCatalogs();
+                this.closeDialog();
+            })
+            .catch(error => {
+                this.alertService().showHttpError(this, error.response);
+            });
+        }else {
+            this.productService()
+            .create(data)
+            .then(() => {
+                Swal.fire("Bien Hecho!", "Registramos el Producto correctamente!", "success");
+                this.retrieveAllCatalogs();
+                this.closeDialog();
+            })
+            .catch(error => {
+                this.alertService().showHttpError(this, error.response);
+            });
+        }
 
     }
 
@@ -185,5 +236,22 @@ export default class ProductComponent extends Vue {
         if (<any>this.$refs.settingEntity) {
             (<any>this.$refs.settingEntity).show();
         }
+    }
+
+    public retrieveAllCatalogs(): void {
+        this.catalogService()
+            .retrieve({
+                page: 1,
+                size: 100,
+                sort: this.sort(),
+            })
+            .then(
+                res => {
+                    this.catalogs = res.data.data;
+                },
+                err => {
+                    this.alertService().showHttpError(this, err.response);
+                }
+            );
     }
 }

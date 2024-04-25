@@ -155,16 +155,61 @@
         </b-modal>
 
         <!-- crear y editar modal -->
-        <b-modal ref="createdEditEntity" id="createdEditEntity">
+        <b-modal ref="createdEditEntity" id="createdEditEntity" size="lg">
             <span slot="modal-title">
                 <span>{{ createdTitleModal }}</span>
             </span>
             <div class="modal-body">
-                <div>
-                    <b-alert show variant="warning">
-                        <strong>¡Advertencia¡</strong> Espacio en construcción.
-                    </b-alert>
+                <div class="row">
+                    <div class="col-md-6 col-sm-12">
+                        <b-form-group label="Serial code">
+                            <b-form-input placeholder="Serial code" v-model="product.serial_code"></b-form-input>
+                        </b-form-group>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <b-form-group label="Categoria para el Producto" class="mr-2">
+                            <b-form-select v-model="product.catalog_id">
+                                <b-form-select-option :value="undefined" disabled>-- Seleccione una categoria --</b-form-select-option>
+                                <option v-for="catalogItem in catalogs" :value="catalogItem.id" :key="catalogItem.id">
+                                    {{ catalogItem.catalog_name }}
+                                </option>
+                            </b-form-select>
+                        </b-form-group>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <b-form-group label="Name">
+                            <b-form-input placeholder="Name" v-model="product.name"></b-form-input>
+                        </b-form-group>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <b-form-group label="Price">
+                            <b-form-input type="number" placeholder="Price" v-model="product.price"></b-form-input>
+                        </b-form-group>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <b-form-group label="Tax">
+                            <b-form-input type="number" placeholder="Tax" v-model="product.iva"></b-form-input>
+                        </b-form-group>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <b-form-group label="Discount">
+                            <b-form-input type="number" placeholder="Discount" v-model="product.discount"></b-form-input>
+                        </b-form-group>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <b-form-group label="Stock">
+                            <b-form-input type="number" placeholder="Stock" v-model="product.stock"></b-form-input>
+                        </b-form-group>
+                    </div>
+                    <div class="col-md-6 col-sm-12">
+                        <b-form-group label="Description">
+                            <b-form-textarea placeholder="Description" rows="3" max-rows="6" v-model="product.description"></b-form-textarea>
+                        </b-form-group>
+                    </div>
                 </div>
+
+                <!-- <pre>{{catalogs[0]}}</pre>
+                <pre>{{ product.catalog }}</pre> -->
             </div>
             <div slot="modal-footer">
                 <button type="button" class="btn btn-secondary" v-on:click="closeDialog()">

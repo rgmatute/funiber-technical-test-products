@@ -8,7 +8,7 @@ export interface IProduct {
     iva?: number | null;
     discount?: number | null;
     resource_id?: string | null;
-    catalog?: any | null;
+    catalog_id?: any | null;
     status?: boolean | null;
     created_by?: string | null;
   }
@@ -24,7 +24,7 @@ export interface IProduct {
       iva?: number | null,
       discount?: number | null,
       resource_id?: string | null,
-      catalog?: any | null,
+      catalog_id?: any | null,
       status?: boolean | null,
       created_by?: string | null
     ) {}
