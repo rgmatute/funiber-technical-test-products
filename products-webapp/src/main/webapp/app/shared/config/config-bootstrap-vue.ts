@@ -27,6 +27,7 @@ import {
   BNav,
   BInputGroupAppend,
   BFormTextarea,
+  BAvatar,
 } from 'bootstrap-vue';
 
 export function initBootstrapVue(vue) {
@@ -59,4 +60,5 @@ export function initBootstrapVue(vue) {
   vue.component('b-nav', BNav);
   vue.component('b-input-group-append', BInputGroupAppend);
   vue.component('b-form-textarea', BFormTextarea);
+  vue.component('b-avatar', BAvatar);
 }

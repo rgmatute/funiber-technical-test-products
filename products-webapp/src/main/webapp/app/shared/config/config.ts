@@ -48,7 +48,7 @@ import Vue2Filters from 'vue2-filters';
 import * as filters from '@/shared/date/filters';
 import { accountStore } from '@/shared/config/store/account-store';
 import { translationStore } from '@/shared/config/store/translation-store';
-import { faCartShopping, faCircleDot, faFileText } from '@fortawesome/free-solid-svg-icons';
+import { faCartShopping, faCircleDot, faCog, faFileText } from '@fortawesome/free-solid-svg-icons';
 
 const dateTimeFormats: DateTimeFormats = {
   en: {
@@ -152,7 +152,8 @@ export function initFortAwesome(vue) {
     faWrench,
     faCircleDot,
     faCartShopping,
-    faFileText
+    faFileText,
+    faCog
   );
 }
 
