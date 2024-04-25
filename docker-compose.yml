@@ -29,3 +29,11 @@ services:
       MYSQL_ROOT_PASSWORD: 'funiber-2@24'
     ports:
       - "3306:3306"
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    ports:
+      - "8081:80"
+    environment:
+      PMA_HOST: products-db
+      MYSQL_ROOT_PASSWORD: funiber-2@24
