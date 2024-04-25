@@ -28,6 +28,7 @@ import {
   BInputGroupAppend,
   BFormTextarea,
   BAvatar,
+  VBTooltip,
 } from 'bootstrap-vue';
 
 export function initBootstrapVue(vue) {
@@ -61,4 +62,5 @@ export function initBootstrapVue(vue) {
   vue.component('b-input-group-append', BInputGroupAppend);
   vue.component('b-form-textarea', BFormTextarea);
   vue.component('b-avatar', BAvatar);
+  vue.directive('b-tooltip', VBTooltip);
 }

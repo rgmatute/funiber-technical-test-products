@@ -41,7 +41,7 @@
         </div>
 
         <div class="table-responsive" v-if="products && products.length > 0">
-            <table class="table table-striped table-sm table-bordered" aria-describedby="products">
+            <table class="table table-striped table-sm table-bordered responsive" aria-describedby="products">
                 <thead class="text-center">
                     <tr>
                         <th scope="row"><span></span></th>
@@ -52,8 +52,8 @@
                         <th scope="row"><span>Tax</span></th>
                         <th scope="row"><span>Discount</span></th>
                         <th scope="row"><span>Stock</span></th>
-                        <th scope="row"><span>Description</span></th>
-                        <th scope="row"><span>Created by</span></th>
+                        <!-- <th scope="row"><span>Description</span></th> -->
+                        <!-- <th scope="row"><span>Created by</span></th> -->
                         <th scope="row"><span>Status</span></th>
                         <th scope="row"></th>
                     </tr>
@@ -76,21 +76,31 @@
                             <b-badge v-else variant="danger" size="sm" :text="String(product.stock)">{{ product.stock
                                 }}</b-badge>
                         </td>
-                        <td class="align-middle text-muted">{{ product.description }}</td>
-                        <td class="align-middle small text-muted">{{ product.created_by }}</td>
+                        <!-- <td class="align-middle text-muted">{{ product.description }}</td> -->
+                        <!-- <td class="align-middle small text-muted">{{ product.created_by }}</td> -->
 
                         <td class="align-middle">
                             <b-badge v-if="product.status == true" variant="success">ACTIVE</b-badge>
                             <b-badge v-else variant="danger">INACTIVE</b-badge>
                         </td>
                         <td class="align-middle">
-                            <!-- <b-button variant="primary" size="sm" @click="editCatalog(catalog)">
-                                <font-awesome-icon icon="pencil" size="sm"></font-awesome-icon> Edit
+                            <b-button variant="primary" size="sm" @click="onEdit(product)"
+                            v-b-tooltip.left
+                            title="Editar Producto!">
+                                <font-awesome-icon icon="pencil" size="sm"></font-awesome-icon>
                             </b-button>
 
-                            <b-button variant="danger" size="sm" @click="prepareRemove(catalog)">
-                                <font-awesome-icon icon="trash" size="sm"></font-awesome-icon> Detele
-                            </b-button> -->
+                            <b-button variant="danger" size="sm" @click="onPrepareRemove(product)" 
+                            v-b-tooltip.left
+                            title="Eliminar Producto!">
+                                <font-awesome-icon icon="trash" size="sm"></font-awesome-icon>
+                            </b-button>
+
+                            <b-button variant="secondary" size="sm" @click="onPrepareRemove(product)"
+                                v-b-tooltip.left.html
+                                title="Ver <strong>Historial</strong> de eventos">
+                                <font-awesome-icon icon="eye" size="sm"></font-awesome-icon>
+                            </b-button>
                         </td>
                     </tr>
                 </tbody>

@@ -101,4 +101,12 @@ export default class ProductComponent extends Vue {
     public onSearch(): void {
 
     }
+
+    public onEdit(product: IProduct): void {
+
+    }
+
+    public onPrepareRemove(product: IProduct): void {
+
+    }
 }
