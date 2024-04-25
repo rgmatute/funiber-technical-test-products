@@ -1,6 +1,8 @@
 ## BACKEND ( `development in Lumen - Laravel with PHP 8.1` )
 
-### PREPARE THE ENVIRONMENT
+### PREPARE THE ENVIRONMENT ( sin docker )
+
+`Primero descargar proyecto y acceder a products-api`
 
 - composer install
 - php artisan migrate
@@ -16,7 +18,7 @@
 ## FRONT - END ( `development in Vue-2 with Node v18.17.1` )
 
 ### Preparar ambiente ( sin docker )
-- 1) Descargar proyecto y acceder a la carpeta `products_webapp`
+- 1) Descargar proyecto y acceder a la carpeta `products-webapp`
 - 2) Aplicar comando `npm install`
 - 3) Aplicat comando `npm start`
 - 4) Acceder a `htts://localhost:9000`
