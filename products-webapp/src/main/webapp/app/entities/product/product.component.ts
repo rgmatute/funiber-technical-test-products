@@ -23,7 +23,7 @@ export default class ProductComponent extends Vue {
     public reverse = false;
     public totalItems = 0;
 
-    public filterSelected = 'category';
+    public filterKeySelected = 'category';
     public searchStringValue = null;
     private removeId: number = null;
     public filterByStockEnabled = true;
@@ -120,7 +120,27 @@ export default class ProductComponent extends Vue {
     }
 
     public onSearch(): void {
-
+        this.isFetching = true;
+        this.productService()
+            .search({
+                page: this.page,
+                size: this.itemsPerPage,
+                sort: this.sort(),
+                key: this.filterKeySelected,
+                value: this.searchStringValue
+            })
+            .then(
+                res => {
+                    this.products = res.data.data;
+                    this.isFetching = false;
+                    this.totalItems = res.data.total;
+                    this.queryCount = this.totalItems;
+                },
+                err => {
+                    this.isFetching = false;
+                    this.alertService().showHttpError(this, err.response);
+                }
+            );
     }
 
     public onEdit(product: IProduct): void {
@@ -202,31 +222,31 @@ export default class ProductComponent extends Vue {
             catalog_id: this.product.catalog_id
         };
 
-        if(this.product.id) {
+        if (this.product.id) {
             this.productService()
-            .update({
-                id: this.product.id,
-                ...data
-            })
-            .then(() => {
-                Swal.fire("Bien Hecho!", "Actualizamos el Producto correctamente!", "success");
-                this.retrieveAllCatalogs();
-                this.closeDialog();
-            })
-            .catch(error => {
-                this.alertService().showHttpError(this, error.response);
-            });
-        }else {
+                .update({
+                    id: this.product.id,
+                    ...data
+                })
+                .then(() => {
+                    Swal.fire("Bien Hecho!", "Actualizamos el Producto correctamente!", "success");
+                    this.retrieveAllCatalogs();
+                    this.closeDialog();
+                })
+                .catch(error => {
+                    this.alertService().showHttpError(this, error.response);
+                });
+        } else {
             this.productService()
-            .create(data)
-            .then(() => {
-                Swal.fire("Bien Hecho!", "Registramos el Producto correctamente!", "success");
-                this.retrieveAllCatalogs();
-                this.closeDialog();
-            })
-            .catch(error => {
-                this.alertService().showHttpError(this, error.response);
-            });
+                .create(data)
+                .then(() => {
+                    Swal.fire("Bien Hecho!", "Registramos el Producto correctamente!", "success");
+                    this.retrieveAllCatalogs();
+                    this.closeDialog();
+                })
+                .catch(error => {
+                    this.alertService().showHttpError(this, error.response);
+                });
         }
 
     }

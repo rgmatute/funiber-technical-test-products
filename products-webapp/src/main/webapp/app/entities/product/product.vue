@@ -20,7 +20,7 @@
 
         <div class="d-flex justify-content-end" v-if="products && products.length > 0">
             <!-- buscador -->
-            <b-form-group :label="'Search by field --> ' + filterSelected" class="mb-0">
+            <b-form-group :label="'Search by field --> ' + filterKeySelected" class="mb-0">
                 <b-input-group size="md" class="mb-2">
                     <b-input-group-prepend>
                         <b-button variant="secondary" size="md" @click="onSetting()">
@@ -230,7 +230,7 @@
             </span>
             <div class="modal-body">
                 <b-form-group label="Filter by fields selected" v-slot="{ ariaDescribedby }">
-                    <b-form-radio-group id="radio-group-2" v-model="filterSelected" :aria-describedby="ariaDescribedby"
+                    <b-form-radio-group id="radio-group-2" v-model="filterKeySelected" :aria-describedby="ariaDescribedby"
                         name="radio-sub-component">
                         <b-form-radio value="serial_code">Filter by code</b-form-radio>
                         <b-form-radio value="name">Filter by name</b-form-radio>
