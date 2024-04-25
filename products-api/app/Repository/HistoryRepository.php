@@ -12,6 +12,9 @@ class HistoryRepository
     }
 
     public function search($key, $value) {
-        return History::where($key, '=', $value)->paginate();
+
+        $perPage = request()->input('size', 10) ?? 10;
+
+        return History::where($key, '=', $value)->paginate($perPage);
     }
 }
