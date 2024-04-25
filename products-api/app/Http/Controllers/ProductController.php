@@ -30,7 +30,8 @@ class ProductController extends Controller
     }
 
     public function show($id, Request $request){
-        $response = $this->productService->findById($id);
+
+        $response = $this->productService->findById($id, $this->jwtInfo);
 
         return $this->successResponse($response);
     }

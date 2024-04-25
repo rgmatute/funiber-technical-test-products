@@ -52,6 +52,6 @@ class ProductRepository
     }
 
     public function findByIdAndStatus( int $id, bool $status){
-        return Product::with('catalog')->where('id', $id)->where('status', $status)->first();
+        return Product::where('id', $id)->where('status', $status)->first();
     }
 }

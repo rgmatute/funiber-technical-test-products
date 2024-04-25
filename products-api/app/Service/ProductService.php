@@ -37,12 +37,20 @@
         /**
          * @throws GenericException
          */
-        public function findById($id) {
+        public function findById($id, $jwtInfo) {
+            
             if(!is_numeric($id)){
                 throw new GenericException('Necesita proporcionar un código numerico!', 400);
             }
 
             $response = $this->productRepository->findById($id);
+
+            $this->historyService->created([
+                'event' => 'findById',
+                'product_id' => $id,
+                'before' => json_encode([]),
+                'after' => json_encode([])
+            ], $jwtInfo);
 
             if(!isset($response)){
                 throw new GenericException("No existe el registro con id '$id'", 404);
@@ -149,14 +157,27 @@
             // Por ahora el registro existe con estado false, pero hago de cuenta que no existe
             $exits = $this->productRepository->findByIdAndStatus($id, true);
             if(!isset($exits)){
-                throw new GenericException("No existe el registro con id --> '$id'");
+                // 
+                $exits = $this->productRepository->findByIdAndStatus($id, false);
+                if(isset($exits)){
+                    throw new GenericException("El producto con id --> '$id' está inactivo!");
+                } else {
+                    throw new GenericException("No existe el producto con id --> '$id'");
+                }
             }
 
-            $id = $this->productRepository->delete($id);
+            $this->productRepository->delete($id);
             $exits = $this->productRepository->isActiveById($id);
 
             if(isset($exits)){
-                throw new GenericException("No se pudo eliminar el cliente con id --> '$id'");
+                throw new GenericException("No se pudo eliminar el producto con id --> '$id'");
+            } else {
+                $this->historyService->created([
+                    'event' => 'deleted',
+                    'product_id' => $id,
+                    'before' => json_encode([]),
+                    'after' => json_encode([])
+                ], $jwtInfo);
             }
         }
 
