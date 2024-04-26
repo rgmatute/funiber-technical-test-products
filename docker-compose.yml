@@ -2,6 +2,7 @@ version: '3.3'
 
 services:
   products-api:
+    image: rgmatute/products-api:1.0.0
     build: ./products-api
     container_name: products-api
     restart: always
@@ -28,8 +29,11 @@ services:
       - "3306:3306"
 
   products-webapp:
-    build: ./products-webapp
+    image: rgmatute/products-webapp:1.0.0
     container_name: products-webapp
+    build:
+      context: ../../
+      dockerfile: ./products-webapp/docker/Dockerfile
     ports:
       - "9000:80"
     depends_on:
